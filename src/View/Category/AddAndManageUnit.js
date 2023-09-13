@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import HomeService from "../../Service/HomeService";
 import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
+import PageLoader from "../../Loader/PageLoader";
 
 const AddAndManageUnit = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ const AddAndManageUnit = () => {
 
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchAllUnitData();
@@ -54,10 +56,12 @@ const AddAndManageUnit = () => {
   };
 
   const fetchAllUnitData = () => {
+    setLoading(true);
     HomeService.ViewAllUnit()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
+          setLoading(false);
           // setLoader(false)
           let arr = res?.data?.map((item, index) => {
             return {
@@ -113,6 +117,7 @@ const AddAndManageUnit = () => {
         console.log("RESPONSE", res);
       })
       .catch((err) => {
+        setLoading(false);
         console.log("err", err);
       });
   };
@@ -208,10 +213,73 @@ const AddAndManageUnit = () => {
   };
   return (
     <>
-      <div component="div" className="TabsAnimation appear-done enter-done">
-        <div className="main-card mb-3 card">
-          <div className="card-body">
-            {hide ? (
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          {" "}
+          <PageLoader />
+        </div>
+      ) : (
+        <div component="div" className="TabsAnimation appear-done enter-done">
+          <div className="main-card mb-3 card">
+            <div className="card-body">
+              {hide ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Add Unit
+                </div>
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Edit Unit
+                </div>
+              )}
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  Unit Name<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter country name..."
+                />
+              </div>
+
+              {hide ? (
+                <button class="btn btn-primary" onClick={AddUnit}>
+                  Submit
+                </button>
+              ) : (
+                <button class="btn btn-primary" onClick={UpdateUnit}>
+                  Update
+                </button>
+              )}
+
               <div
                 style={{
                   textAlign: "center",
@@ -221,62 +289,13 @@ const AddAndManageUnit = () => {
                 }}
                 className="card-title"
               >
-                Add Unit
+                Manage Unit
               </div>
-            ) : (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
-                }}
-                className="card-title"
-              >
-                Edit Unit
-              </div>
-            )}
-
-            <div class="form-group">
-              <label for="exampleInputEmail1">
-                Unit Name<span style={{ color: "red" }}>*</span> :
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter country name..."
-              />
+              <DataTable columns={columns} data={allState} pagination />
             </div>
-
-            {hide ? (
-              <button class="btn btn-primary" onClick={AddUnit}>
-                Submit
-              </button>
-            ) : (
-              <button class="btn btn-primary" onClick={UpdateUnit}>
-                Update
-              </button>
-            )}
-
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "20px",
-                color: "#868e96",
-                margin: "35px",
-              }}
-              className="card-title"
-            >
-              Manage Unit
-            </div>
-            <DataTable columns={columns} data={allState} pagination />
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

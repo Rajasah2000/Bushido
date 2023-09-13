@@ -14,6 +14,9 @@ import AddAndManageLanguage from "./View/Category/AddAndManageLanguage";
 import AddAndManageSubCategory from "./View/Category/AddAndManageSubCategory";
 import AddAndManageBanner from "./View/Category/AddAndManageBanner";
 import AddAndManageUnit from "./View/Category/AddAndManageUnit";
+import ApprovedPartnerList from "./View/EstorePartnerCategory/ApprovedPartnerList";
+import PendingForApproval from "./View/EstorePartnerCategory/PendingForApproval";
+import AddAndMAnageMusicCategory from "./View/PodCast/AddAndMAnageMusicCategory";
 
 import { Toaster } from "react-hot-toast";
 
@@ -48,6 +51,18 @@ function App() {
             />
             <Route path="/add-manage-banner" element={<AddAndManageBanner />} />
             <Route path="/add-manage-unit" element={<AddAndManageUnit />} />
+            <Route
+              path="/apprroved-partner-list"
+              element={<ApprovedPartnerList />}
+            />
+            <Route
+              path="/view-pending-for-approval"
+              element={<PendingForApproval />}
+            />
+            <Route
+              path="/add-manage-music-category"
+              element={<AddAndMAnageMusicCategory />}
+            />
           </Route>
         </Route>
 

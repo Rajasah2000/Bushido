@@ -6,11 +6,13 @@ import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
 import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
+import PageLoader from "../../Loader/PageLoader";
 
 const AddAndManageCategoryBanner = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [allState, setAllState] = useState([]);
 
@@ -81,10 +83,12 @@ const AddAndManageCategoryBanner = () => {
   };
 
   const fetchAllBanner = () => {
+    setLoading(true);
     HomeService.ViewAllBannerImage()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
+          setLoading(false);
           // setLoader(false)
           let arr = res?.data?.map((item, index) => {
             return {
@@ -166,6 +170,7 @@ const AddAndManageCategoryBanner = () => {
         console.log("RESPONSE", res);
       })
       .catch((err) => {
+        setLoading(false);
         console.log("err", err);
       });
   };
@@ -264,101 +269,114 @@ const AddAndManageCategoryBanner = () => {
   };
   return (
     <>
-      <div component="div" className="TabsAnimation appear-done enter-done">
-        <div className="main-card mb-3 card">
-          <div className="card-body">
-            {hide ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
-                }}
-                className="card-title"
-              >
-                Add Category Banner
-              </div>
-            ) : (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "#868e96",
-                  margin: "35px",
-                }}
-                className="card-title"
-              >
-                Edit Category Banner
-              </div>
-            )}
-
-            <div class="form-group">
-              <label for="exampleInputEmail1">
-                Category Banner<span style={{ color: "red" }}>*</span> :
-              </label>
-
-              <input
-                class="form-control"
-                onChange={(e) => HandleImage(e)}
-                type="file"
-                id="categoryBanner"
-                accept="image/*"
-              />
-              {imageLoader ? (
-                <>
-                  <ImageLoader />{" "}
-                </>
-              ) : null}
-              {image && (
-                <>
-                  <div>
-                    <img
-                      style={{
-                        height: "10%",
-                        width: "10%",
-                        marginTop: "12px",
-                        borderRadius: "5px",
-                      }}
-                      src={image}
-                    />
-                    <button
-                      onClick={() => HandleCrossClick()}
-                      style={{ color: "red" }}
-                      type="button"
-                      class="btn-close"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                </>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <PageLoader />
+        </div>
+      ) : (
+        <div component="div" className="TabsAnimation appear-done enter-done">
+          <div className="main-card mb-3 card">
+            <div className="card-body">
+              {hide ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Add Category Banner
+                </div>
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Edit Category Banner
+                </div>
               )}
-            </div>
 
-            {hide ? (
-              <button class="btn btn-primary" onClick={AddCategoryBanner}>
-                Submit
-              </button>
-            ) : (
-              <button class="btn btn-primary" onClick={UpdateCategoryBanner}>
-                Update
-              </button>
-            )}
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  Category Banner<span style={{ color: "red" }}>*</span> :
+                </label>
 
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "20px",
-                color: "#868e96",
-                margin: "35px",
-              }}
-              className="card-title"
-            >
-              Manage Category Banner
+                <input
+                  class="form-control"
+                  onChange={(e) => HandleImage(e)}
+                  type="file"
+                  id="categoryBanner"
+                  accept="image/*"
+                />
+                {imageLoader ? (
+                  <>
+                    <ImageLoader />{" "}
+                  </>
+                ) : null}
+                {image && (
+                  <>
+                    <div>
+                      <img
+                        style={{
+                          height: "10%",
+                          width: "10%",
+                          marginTop: "12px",
+                          borderRadius: "5px",
+                        }}
+                        src={image}
+                      />
+                      <button
+                        onClick={() => HandleCrossClick()}
+                        style={{ color: "red" }}
+                        type="button"
+                        class="btn-close"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {hide ? (
+                <button class="btn btn-primary" onClick={AddCategoryBanner}>
+                  Submit
+                </button>
+              ) : (
+                <button class="btn btn-primary" onClick={UpdateCategoryBanner}>
+                  Update
+                </button>
+              )}
+
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "#868e96",
+                  margin: "35px",
+                }}
+                className="card-title"
+              >
+                Manage Category Banner
+              </div>
+              <DataTable columns={columns} data={allState} pagination />
             </div>
-            <DataTable columns={columns} data={allState} pagination />
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

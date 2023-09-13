@@ -11,6 +11,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const hankclickModal = () => {
+    window.scroll(0, 0);
     setAccountModal(!accountModal);
   };
 
@@ -76,12 +77,17 @@ export default function Header() {
       <Sidebar />
       <div className="app-header bg-strong-bliss header-text-light header-shadow appear-done enter-done">
         <div className="app-header__logo">
-        
-          <div className="logo_" style={{ marginLeft:'52px' , fontStyle: "italic"   , fontSize: "large"}}>
-          
+          <div
+            className="logo_"
+            style={{
+              marginLeft: "52px",
+              fontStyle: "italic",
+              fontSize: "large",
+            }}
+          >
             <span>Bushido</span>
           </div>
-        
+
           <div className="header__pane ms-auto">
             <div>
               <button
@@ -109,7 +115,6 @@ export default function Header() {
         </div>
 
         <div className="app-header__content">
-
           <div className="app-header-right">
             <div className="header-btn-lg pe-0">
               <div className="widget-content p-0">

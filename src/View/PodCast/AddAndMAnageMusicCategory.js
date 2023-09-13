@@ -8,11 +8,9 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndManageBanner = () => {
+const AddAndMAnageMusicCategory = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
-  const [desc, setDesc] = useState("");
-  const [buttonText, setButtonText] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +20,7 @@ const AddAndManageBanner = () => {
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllBanner();
+    fetchAllMusicCategoryData();
   }, []);
 
   const HandleCrossClick = () => {
@@ -33,9 +31,9 @@ const AddAndManageBanner = () => {
 
   const onEdit = (item) => {
     window.scroll(0, 0);
+    console.log("item", item);
     setImage(item?.image);
-    setButtonText(item?.button);
-    setDesc(item?.description);
+    setName(item?.catName);
     setId(item?._id);
     setHide(false);
   };
@@ -51,12 +49,12 @@ const AddAndManageBanner = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteBanner(id)
+        HomeService.DeleteMusicCategory(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllBanner();
+              fetchAllMusicCategoryData();
             } else {
               toast.error(res?.message);
             }
@@ -85,9 +83,9 @@ const AddAndManageBanner = () => {
     setImageLoader(false);
   };
 
-  const fetchAllBanner = () => {
+  const fetchAllMusicCategoryData = () => {
     setLoading(true);
-    HomeService.ViewAllBanner()
+    HomeService.ViewAllMusicCategory()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
@@ -96,8 +94,7 @@ const AddAndManageBanner = () => {
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              description: item?.description,
-              buttonName: item?.button,
+              catName: item?.catName,
               CategoryBanner: (
                 <>
                   {item?.image ? (
@@ -180,22 +177,20 @@ const AddAndManageBanner = () => {
       });
   };
 
-  const AddBanner = () => {
+  const AddMusicCategory = () => {
     let data = {
+      catName: name,
       image: image,
-      button: buttonText,
-      description: desc,
     };
 
-    if (image && buttonText && desc) {
-      HomeService.AddBanner(data)
+    if (name && image) {
+      HomeService.AddMusicCategory(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllBanner();
+            fetchAllMusicCategoryData();
             setImage("");
-            setButtonText("");
-            setDesc("");
+            setName("");
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -206,7 +201,7 @@ const AddAndManageBanner = () => {
           console.log(err);
         });
     } else {
-      toast.error("All fields is required");
+      toast.error("All fields are required");
     }
   };
 
@@ -226,22 +221,11 @@ const AddAndManageBanner = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Description
+          Category Name
         </div>
       ),
-      selector: (row) => row.description,
+      selector: (row) => row.catName,
     },
-    {
-      name: (
-        <div
-          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
-        >
-          Button Name
-        </div>
-      ),
-      selector: (row) => row.buttonName,
-    },
-
     {
       name: (
         <div
@@ -270,23 +254,22 @@ const AddAndManageBanner = () => {
     },
   ];
 
-  const UpdateBanner = () => {
+  const UpdateMusicCategory = () => {
     console.log("ID", id);
     let data = {
+      catName: name,
       image: image,
-      button: buttonText,
-      description: desc,
     };
-    if (image && buttonText && desc) {
-      HomeService.UpdateBanner(id, data)
+    if (name && image) {
+      HomeService.UpdateMusicCategory(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
             setHide(true);
-            setButtonText("");
-            setDesc("");
+
             setImage("");
-            fetchAllBanner();
+            setName("");
+            fetchAllMusicCategoryData();
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -297,7 +280,7 @@ const AddAndManageBanner = () => {
           console.log(err);
         });
     } else {
-      toast.error("All fields is required");
+      toast.error("All field are required");
     }
   };
   return (
@@ -327,7 +310,7 @@ const AddAndManageBanner = () => {
                   }}
                   className="card-title"
                 >
-                  Add Category Banner
+                  Add Music Category
                 </div>
               ) : (
                 <div
@@ -339,41 +322,27 @@ const AddAndManageBanner = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Category Banner
+                  Edit Music Category
                 </div>
               )}
 
               <div class="form-group">
-                <div class="row" style={{ marginBottom: "1rem" }}>
-                  <div class="col">
-                    <label for="inputEmail4">
-                      Description<span style={{ color: "red" }}>*</span> :
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      value={desc}
-                      onChange={(e) => setDesc(e.target.value)}
-                      placeholder="Enter description..."
-                    />
-                  </div>
-
-                  <div class="col">
-                    <label for="inputEmail4">
-                      Button Name<span style={{ color: "red" }}>*</span> :
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter button name..."
-                      value={buttonText}
-                      onChange={(e) => setButtonText(e.target.value)}
-                    />
-                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">
+                    Category Name<span style={{ color: "red" }}>*</span> :
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    value={name}
+                    onChange={(e) => setName(e?.target?.value)}
+                    aria-describedby="emailHelp"
+                    placeholder="Enter category name"
+                  />
                 </div>
-
                 <label for="exampleInputEmail1">
-                  Category Banner<span style={{ color: "red" }}>*</span> :
+                  Image<span style={{ color: "red" }}>*</span> :
                 </label>
 
                 <input
@@ -413,11 +382,11 @@ const AddAndManageBanner = () => {
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddBanner}>
+                <button class="btn btn-primary" onClick={AddMusicCategory}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateBanner}>
+                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
                   Update
                 </button>
               )}
@@ -431,7 +400,7 @@ const AddAndManageBanner = () => {
                 }}
                 className="card-title"
               >
-                Manage Category Banner
+                Manage Music Category
               </div>
               <DataTable columns={columns} data={allState} pagination />
             </div>
@@ -442,4 +411,4 @@ const AddAndManageBanner = () => {
   );
 };
 
-export default AddAndManageBanner;
+export default AddAndMAnageMusicCategory;

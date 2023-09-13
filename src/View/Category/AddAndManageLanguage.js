@@ -4,11 +4,13 @@ import { toast } from "react-hot-toast";
 import HomeService from "../../Service/HomeService";
 import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
+import PageLoader from "../../Loader/PageLoader";
 
 const AddAndManageLanguage = () => {
   const [name, setName] = useState("");
 
   const [allLanguageData, setAllLanguageData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
@@ -54,10 +56,12 @@ const AddAndManageLanguage = () => {
   };
 
   const fetchAllLanguageData = () => {
+    setLoading(true);
     HomeService.ViewAllLanguage()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
+          setLoading(false);
           // setLoader(false)
           let arr = res?.data?.map((item, index) => {
             return {
@@ -113,6 +117,7 @@ const AddAndManageLanguage = () => {
         console.log("RESPONSE", res);
       })
       .catch((err) => {
+        setLoading(false);
         console.log("err", err);
       });
   };
@@ -207,6 +212,88 @@ const AddAndManageLanguage = () => {
   };
   return (
     <>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <PageLoader />
+        </div>
+      ) : (
+        <div component="div" className="TabsAnimation appear-done enter-done">
+          <div className="main-card mb-3 card">
+            <div className="card-body">
+              {hide ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Add Language
+                </div>
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Edit Language
+                </div>
+              )}
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">
+                  Language<span style={{ color: "red" }}>*</span> :
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter language name..."
+                />
+              </div>
+
+              {hide ? (
+                <button class="btn btn-primary" onClick={AddLanguage}>
+                  Submit
+                </button>
+              ) : (
+                <button class="btn btn-primary" onClick={UpdateLanguage}>
+                  Update
+                </button>
+              )}
+
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "#868e96",
+                  margin: "35px",
+                }}
+                className="card-title"
+              >
+                Manage Language
+              </div>
+              <DataTable columns={columns} data={allLanguageData} pagination />
+            </div>
+          </div>
+        </div>
+      )}
       <div component="div" className="TabsAnimation appear-done enter-done">
         <div className="main-card mb-3 card">
           <div className="card-body">

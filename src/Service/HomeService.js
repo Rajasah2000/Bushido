@@ -129,8 +129,42 @@ async function DeleteUnit(id) {
   let endpoind = `delete-Unit/${id}`;
   return HttpClientXml.deletemethod(endpoind);
 }
+async function ViewAllApprovedPartnerList() {
+  let endpoind = "view-Approved-PartnerList";
+  return HttpClientXml.get(endpoind);
+}
+async function ViewAllPendingPartnerList() {
+  let endpoind = "view-Pending-ForApproval";
+  return HttpClientXml.get(endpoind);
+}
+async function PartnerApprovedByAdmin(id) {
+  let endpoind = `eStore-Partner-Approved-ByAdmin/${id}`;
+  return HttpClientXml.put(endpoind);
+}
+
+async function AddMusicCategory(data) {
+  let endpoind = "add-music-category";
+  return HttpClientXml.post(endpoind, data);
+}
+async function ViewAllMusicCategory() {
+  let endpoind = "view-music-category";
+  return HttpClientXml.get(endpoind);
+}
+async function UpdateMusicCategory(id, data) {
+  let endpoind = `update-music-category/${id}`;
+  return HttpClientXml.put(endpoind, data);
+}
+
+async function DeleteMusicCategory(id) {
+  let endpoind = `delete-music-category/${id}`;
+  return HttpClientXml.deletemethod(endpoind);
+}
 
 export default {
+  AddMusicCategory,
+  ViewAllMusicCategory,
+  DeleteMusicCategory,
+  UpdateMusicCategory,
   AddCategory,
   ViewAllCategory,
   UpdateCategory,
@@ -159,4 +193,7 @@ export default {
   ViewAllUnit,
   UpdateUnit,
   DeleteUnit,
+  ViewAllApprovedPartnerList,
+  ViewAllPendingPartnerList,
+  PartnerApprovedByAdmin,
 };

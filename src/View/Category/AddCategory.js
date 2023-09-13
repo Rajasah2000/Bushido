@@ -435,100 +435,191 @@ const AddCategory = () => {
   };
 
   return (
-    <div component="div" className="TabsAnimation appear-done enter-done">
-      <div className="main-card mb-3 card">
-        {imageLoader3 ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <PageLoader />
-          </div>
-        ) : null}
-        <div className="card-body">
-          {hide ? (
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "20px",
-                color: "#868e96",
-                margin: "35px",
-              }}
-              className="card-title"
-            >
-              Add Category
-            </div>
-          ) : (
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "20px",
-                color: "#868e96",
-                margin: "35px",
-              }}
-              className="card-title"
-            >
-              Edit Category
-            </div>
-          )}
+    <>
+      {imageLoader3 ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <PageLoader />
+        </div>
+      ) : (
+        <div component="div" className="TabsAnimation appear-done enter-done">
+          <div className="main-card mb-3 card">
+            <div className="card-body">
+              {hide ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Add Category
+                </div>
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "#868e96",
+                    margin: "35px",
+                  }}
+                  className="card-title"
+                >
+                  Edit Category
+                </div>
+              )}
 
-          <form>
-            <div class="row" style={{ marginBottom: "1rem" }}>
-              <div class="col">
-                <label for="inputEmail4">
-                  Category Name<span style={{ color: "red" }}>*</span> :
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value={CategoryName}
-                  onChange={(e) => SetCategoryName(e.target.value)}
-                  placeholder="Enter name..."
-                />
-              </div>
+              <form>
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Category Name<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value={CategoryName}
+                      onChange={(e) => SetCategoryName(e.target.value)}
+                      placeholder="Enter name..."
+                    />
+                  </div>
 
-              <div class="col">
-                <label for="inputEmail4">
-                  Position<span style={{ color: "red" }}>*</span> :
-                </label>
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter position..."
-                  value={position}
-                  onChange={(e) => setPosition(e.target.value)}
-                />
-              </div>
-            </div>
-            <div class="row" style={{ marginBottom: "1rem" }}>
-              <div class="col">
-                <label for="inputEmail4">
-                  Image<span style={{ color: "red" }}>*</span> :
-                </label>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Position<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Enter position..."
+                      value={position}
+                      onChange={(e) => setPosition(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Image<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <input
+                        class="form-control"
+                        type="file"
+                        onChange={(e) => HandleImage(e, "image")}
+                        accept="image/*"
+                        id="images"
+                      />
+                      {imageLoader ? (
+                        <>
+                          <ImageLoader />{" "}
+                        </>
+                      ) : null}
+                      {image && (
+                        <>
+                          <div>
+                            <img
+                              style={{
+                                height: "20%",
+                                width: "20%",
+                                marginTop: "12px",
+                                borderRadius: "5px",
+                              }}
+                              src={image}
+                            />
+                            <button
+                              onClick={() => HandleCrossClick()}
+                              style={{ color: "red" }}
+                              type="button"
+                              class="btn-close"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Banner Image 1<span style={{ color: "red" }}>*</span> :
+                    </label>
+
+                    <input
+                      class="form-control"
+                      onChange={(e) => HandleImage(e, "bannerImage1")}
+                      type="file"
+                      id="bannerImage1"
+                      accept="image/*"
+                    />
+                    {imageLoader1 ? (
+                      <>
+                        <ImageLoader />{" "}
+                      </>
+                    ) : null}
+                    {bannerImage1 && (
+                      <>
+                        <div>
+                          <img
+                            style={{
+                              height: "20%",
+                              width: "20%",
+                              marginTop: "12px",
+                              borderRadius: "5px",
+                            }}
+                            src={bannerImage1}
+                          />
+                          <button
+                            onClick={() => HandleCrossClick1()}
+                            style={{ color: "red" }}
+                            type="button"
+                            class="btn-close"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">
+                    Banner Image 2<span style={{ color: "red" }}>*</span> :
+                  </label>
+
                   <input
                     class="form-control"
+                    onChange={(e) => HandleImage(e, "bannerImage2")}
                     type="file"
-                    onChange={(e) => HandleImage(e, "image")}
+                    id="bannerImage2"
                     accept="image/*"
-                    id="images"
                   />
-                  {imageLoader ? (
+                  {imageLoader2 ? (
                     <>
                       <ImageLoader />{" "}
                     </>
                   ) : null}
-                  {image && (
+                  {bannerImage2 && (
                     <>
                       <div>
                         <img
                           style={{
-                            height: "20%",
-                            width: "20%",
+                            height: "10%",
+                            width: "10%",
                             marginTop: "12px",
                             borderRadius: "5px",
                           }}
-                          src={image}
+                          src={bannerImage2}
                         />
                         <button
-                          onClick={() => HandleCrossClick()}
+                          onClick={() => HandleCrossClick2()}
                           style={{ color: "red" }}
                           type="button"
                           class="btn-close"
@@ -538,116 +629,35 @@ const AddCategory = () => {
                     </>
                   )}
                 </div>
-              </div>
+              </form>
 
-              <div class="col">
-                <label for="inputEmail4">
-                  Banner Image 1<span style={{ color: "red" }}>*</span> :
-                </label>
-
-                <input
-                  class="form-control"
-                  onChange={(e) => HandleImage(e, "bannerImage1")}
-                  type="file"
-                  id="bannerImage1"
-                  accept="image/*"
-                />
-                {imageLoader1 ? (
-                  <>
-                    <ImageLoader />{" "}
-                  </>
-                ) : null}
-                {bannerImage1 && (
-                  <>
-                    <div>
-                      <img
-                        style={{
-                          height: "20%",
-                          width: "20%",
-                          marginTop: "12px",
-                          borderRadius: "5px",
-                        }}
-                        src={bannerImage1}
-                      />
-                      <button
-                        onClick={() => HandleCrossClick1()}
-                        style={{ color: "red" }}
-                        type="button"
-                        class="btn-close"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">
-                Banner Image 2<span style={{ color: "red" }}>*</span> :
-              </label>
-
-              <input
-                class="form-control"
-                onChange={(e) => HandleImage(e, "bannerImage2")}
-                type="file"
-                id="bannerImage2"
-                accept="image/*"
-              />
-              {imageLoader2 ? (
-                <>
-                  <ImageLoader />{" "}
-                </>
-              ) : null}
-              {bannerImage2 && (
-                <>
-                  <div>
-                    <img
-                      style={{
-                        height: "10%",
-                        width: "10%",
-                        marginTop: "12px",
-                        borderRadius: "5px",
-                      }}
-                      src={bannerImage2}
-                    />
-                    <button
-                      onClick={() => HandleCrossClick2()}
-                      style={{ color: "red" }}
-                      type="button"
-                      class="btn-close"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                </>
+              {hide ? (
+                <button class="btn btn-primary" onClick={AddCategory}>
+                  Submit
+                </button>
+              ) : (
+                <button class="btn btn-primary" onClick={UpdateCategory}>
+                  Update
+                </button>
               )}
+
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "#868e96",
+                  margin: "35px",
+                }}
+                className="card-title"
+              >
+                Manage Category
+              </div>
+              <DataTable columns={columns} data={categoryName} pagination />
             </div>
-          </form>
-
-          {hide ? (
-            <button class="btn btn-primary" onClick={AddCategory}>
-              Submit
-            </button>
-          ) : (
-            <button class="btn btn-primary" onClick={UpdateCategory}>
-              Update
-            </button>
-          )}
-
-          <div
-            style={{
-              textAlign: "center",
-              fontSize: "20px",
-              color: "#868e96",
-              margin: "35px",
-            }}
-            className="card-title"
-          >
-            Manage Category
           </div>
-          <DataTable columns={columns} data={categoryName} pagination />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

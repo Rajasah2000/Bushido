@@ -375,6 +375,134 @@ export default function Sidebar() {
               </div>
             </div>
           </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingTwo"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                  {/* <TbCategory/> */}
+                  Estore Partner
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapseTwo"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingTwo"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/apprroved-partner-list"
+                      className="metismenu-link"
+                    >
+                      Approved PartnerList
+                    </Link>
+                  </li>
+                </ul>
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/view-pending-for-approval"
+                      className="metismenu-link"
+                    >
+                      Pending ForApproval
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingThree"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse22"
+                  aria-expanded="false"
+                  aria-controls="collapse22"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  PodCast
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse22"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingThree"
+            >
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingONE"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapseTWO"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Music Category
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapseTWO"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingONE"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-music-category"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Music Category
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
