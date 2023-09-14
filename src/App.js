@@ -17,6 +17,16 @@ import AddAndManageUnit from "./View/Category/AddAndManageUnit";
 import ApprovedPartnerList from "./View/EstorePartnerCategory/ApprovedPartnerList";
 import PendingForApproval from "./View/EstorePartnerCategory/PendingForApproval";
 import AddAndMAnageMusicCategory from "./View/PodCast/AddAndMAnageMusicCategory";
+import AddAndManageMusicGenre from "./View/PodCast/AddAndManageMusicGenre";
+import AddAndManagePodCastCategory from "./View/PodCast/AddAndManagePodCastCategory";
+import AddAndManagePoints from "./View/PodCast/AddAndManagePoints";
+import AddAndManageMood from "./View/PodCast/AddAndManageMood";
+import PodcastGenre from "./View/PodCast/PodcastGenre";
+import AddAndMaangePodcastSubscription from "./View/PodCast/AddAndMaangePodcastSubscription";
+import AddAndManageOttPartner from "./View/OttPartner/AddAndManageOttPartner";
+import AddAndManageOTTContentLanguage from "./View/OTTContentLanguage/AddAndManageOTTContentLanguage";
+import ApprovedOTTPartnershipList from "./View/OTTPartnerList/ApprovedOTTPartnershipList";
+import DisApprovedOTTPartnerShipList from "./View/OTTPartnerList/DisApprovedOTTPartnerShipList";
 
 import { Toaster } from "react-hot-toast";
 
@@ -63,6 +73,47 @@ function App() {
               path="/add-manage-music-category"
               element={<AddAndMAnageMusicCategory />}
             />
+            <Route
+              path="/add-manage-music-genre"
+              element={<AddAndManageMusicGenre />}
+            />
+            <Route
+              path="/add-manage-podcast-category"
+              element={<AddAndManagePodCastCategory />}
+            />
+
+            <Route
+              path="/add-and-view-points"
+              element={<AddAndManagePoints />}
+            />
+
+            <Route
+              path="/add-and-manage-podcast-genre"
+              element={<PodcastGenre />}
+            />
+
+            <Route
+              path="/add-and-manage-podcast-subscription"
+              element={<AddAndMaangePodcastSubscription />}
+            />
+
+            <Route
+              path="/add-and-manage-ott-partner"
+              element={<AddAndManageOttPartner />}
+            />
+            <Route
+              path="/add-and-manage-ott-content-language"
+              element={<AddAndManageOTTContentLanguage />}
+            />
+            <Route
+              path="/view-apprroved-partnership-list"
+              element={<ApprovedOTTPartnershipList />}
+            />
+            <Route
+              path="/view-disapproved-partnership-list"
+              element={<DisApprovedOTTPartnerShipList />}
+            />
+            <Route path="/add-and-manage-mood" element={<AddAndManageMood />} />
           </Route>
         </Route>
 

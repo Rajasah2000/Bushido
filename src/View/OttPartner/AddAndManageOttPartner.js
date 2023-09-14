@@ -8,7 +8,7 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndMAnageMusicCategory = () => {
+const AddAndManageOttPartner = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
@@ -20,7 +20,7 @@ const AddAndMAnageMusicCategory = () => {
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllMusicCategoryData();
+    fetchAllOttPartner();
   }, []);
 
   const HandleCrossClick = () => {
@@ -54,7 +54,7 @@ const AddAndMAnageMusicCategory = () => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllMusicCategoryData();
+              fetchAllOttPartner();
             } else {
               toast.error(res?.message);
             }
@@ -83,7 +83,7 @@ const AddAndMAnageMusicCategory = () => {
     setImageLoader(false);
   };
 
-  const fetchAllMusicCategoryData = () => {
+  const fetchAllOttPartner = () => {
     setLoading(true);
     HomeService.ViewAllMusicCategory()
       .then((res) => {
@@ -177,18 +177,18 @@ const AddAndMAnageMusicCategory = () => {
       });
   };
 
-  const AddMusicCategory = () => {
+  const AddOttPartner = () => {
     let data = {
       catName: name,
       image: image,
     };
 
     if (name && image) {
-      HomeService.AddMusicCategory(data)
+      HomeService.AddOttPartner(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllMusicCategoryData();
+            fetchAllOttPartner();
             setImage("");
             setName("");
             let file = document.querySelector("#categoryBanner");
@@ -254,14 +254,14 @@ const AddAndMAnageMusicCategory = () => {
     },
   ];
 
-  const UpdateMusicCategory = () => {
+  const UpdateOttPartner = () => {
     console.log("ID", id);
     let data = {
       catName: name,
       image: image,
     };
     if (name && image) {
-      HomeService.UpdateMusicCategory(id, data)
+      HomeService.UpdateOttPartner(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
@@ -269,7 +269,7 @@ const AddAndMAnageMusicCategory = () => {
 
             setImage("");
             setName("");
-            fetchAllMusicCategoryData();
+            fetchAllOttPartner();
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -310,7 +310,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Add Music Category
+                  Add OTT Partner
                 </div>
               ) : (
                 <div
@@ -322,7 +322,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Music Category
+                  Edit Ott Partner
                 </div>
               )}
 
@@ -382,16 +382,16 @@ const AddAndMAnageMusicCategory = () => {
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddMusicCategory}>
+                <button class="btn btn-primary" onClick={AddOttPartner}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
+                <button class="btn btn-primary" onClick={UpdateOttPartner}>
                   Update
                 </button>
               )}
 
-              <div
+              {/* <div
                 style={{
                   textAlign: "center",
                   fontSize: "20px",
@@ -400,9 +400,9 @@ const AddAndMAnageMusicCategory = () => {
                 }}
                 className="card-title"
               >
-                Manage Music Category
-              </div>
-              <DataTable columns={columns} data={allState} pagination />
+                Manage Ott Partner
+              </div> */}
+              {/* <DataTable columns={columns} data={allState} pagination /> */}
             </div>
           </div>
         </div>
@@ -411,4 +411,4 @@ const AddAndMAnageMusicCategory = () => {
   );
 };
 
-export default AddAndMAnageMusicCategory;
+export default AddAndManageOttPartner;

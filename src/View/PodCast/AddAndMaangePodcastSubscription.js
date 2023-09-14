@@ -4,36 +4,31 @@ import { toast } from "react-hot-toast";
 import HomeService from "../../Service/HomeService";
 import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
-import ImageLoader from "../../Loader/ImageLoader";
-import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndMAnageMusicCategory = () => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [imageLoader, setImageLoader] = useState(false);
+const AddAndMaangePodcastSubscription = () => {
+  const [subsriptionDuration, setsubsriptionDuration] = useState("");
+  const [streamingNo, setstreamingNo] = useState("");
+  const [deviceNo, setdeviceNo] = useState("");
+  const [price, setprice] = useState("");
+  const [allPodcastSubscriptionData, setAllPodcastSubscriptionData] = useState(
+    []
+  );
   const [loading, setLoading] = useState(false);
-
-  const [allState, setAllState] = useState([]);
 
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllMusicCategoryData();
+    fetchAllSubscriptionData();
   }, []);
-
-  const HandleCrossClick = () => {
-    setImage("");
-    let file = document.querySelector("#categoryBanner");
-    file.value = "";
-  };
 
   const onEdit = (item) => {
     window.scroll(0, 0);
-    console.log("item", item);
-    setImage(item?.image);
-    setName(item?.catName);
+    setsubsriptionDuration(item?.subsriptionDuration);
+    setstreamingNo(item?.streamingNo);
+    setdeviceNo(item?.deviceNo);
+    setprice(item?.price);
     setId(item?._id);
     setHide(false);
   };
@@ -49,12 +44,12 @@ const AddAndMAnageMusicCategory = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteMusicCategory(id)
+        HomeService.DeletePodcastSubscription(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllMusicCategoryData();
+              fetchAllSubscriptionData();
             } else {
               toast.error(res?.message);
             }
@@ -66,62 +61,21 @@ const AddAndMAnageMusicCategory = () => {
     });
   };
 
-  const HandleImage = async (e) => {
-    setImageLoader(true);
-    let file = e.target.files[0];
-    let data = new FormData();
-    data.append("image", file);
-
-    let res = await HttpClientXml.fileUplode("upload-Image", "POST", data);
-
-    if (res && res.status) {
-      console.log("UploadImageRes", res);
-      setImage(res?.url);
-    } else {
-      toast.error(res?.message);
-    }
-    setImageLoader(false);
-  };
-
-  const fetchAllMusicCategoryData = () => {
+  const fetchAllSubscriptionData = () => {
     setLoading(true);
-    HomeService.ViewAllMusicCategory()
+    HomeService.ViewAllPodCastSubscription()
       .then((res) => {
-        console.log("ResAllBlog", res.data);
+        console.log("Points", res.data);
         if (res && res?.status) {
           setLoading(false);
           // setLoader(false)
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              catName: item?.catName,
-              CategoryBanner: (
-                <>
-                  {item?.image ? (
-                    <img
-                      style={{
-                        height: "29%",
-                        width: "29%",
-                        borderRadius: "9px",
-                        margin: "5px",
-                      }}
-                      src={item?.image}
-                    />
-                  ) : (
-                    <img
-                      style={{
-                        height: "11%",
-                        width: "11%",
-                        borderRadius: "9px",
-                        margin: "5px",
-                      }}
-                      src={
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                      }
-                    />
-                  )}
-                </>
-              ),
+              subsriptionDuration: item?.subsriptionDuration,
+              streamingNo: item?.streamingNo,
+              deviceNo: item?.deviceNo,
+              price: item?.price,
 
               action: (
                 <div style={{ display: "flex", flexDirection: "coloum" }}>
@@ -167,7 +121,7 @@ const AddAndMAnageMusicCategory = () => {
               ),
             };
           });
-          setAllState(arr);
+          setAllPodcastSubscriptionData(arr);
         }
         console.log("RESPONSE", res);
       })
@@ -177,22 +131,25 @@ const AddAndMAnageMusicCategory = () => {
       });
   };
 
-  const AddMusicCategory = () => {
+  const AddSubscription = () => {
     let data = {
-      catName: name,
-      image: image,
+      subsriptionDuration: subsriptionDuration,
+      streamingNo: streamingNo,
+      deviceNo: deviceNo,
+      price: price,
     };
 
-    if (name && image) {
-      HomeService.AddMusicCategory(data)
+    if (subsriptionDuration && streamingNo && deviceNo && price) {
+      HomeService.AddPodCastSubscription(data)
         .then((res) => {
+          console.log("Response Add Country", res);
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllMusicCategoryData();
-            setImage("");
-            setName("");
-            let file = document.querySelector("#categoryBanner");
-            file.value = "";
+            fetchAllSubscriptionData();
+            setsubsriptionDuration("");
+            setstreamingNo("");
+            setdeviceNo("");
+            setprice("");
           } else {
             toast.error(res?.message);
           }
@@ -201,7 +158,7 @@ const AddAndMAnageMusicCategory = () => {
           console.log(err);
         });
     } else {
-      toast.error("All fields are required");
+      toast.error("All Fields Are Required");
     }
   };
 
@@ -221,20 +178,40 @@ const AddAndMAnageMusicCategory = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Category Name
+          Subsription Duration
         </div>
       ),
-      selector: (row) => row.catName,
+      selector: (row) => row.subsriptionDuration,
     },
     {
       name: (
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Image
+          Streaming No
         </div>
       ),
-      selector: (row) => row.CategoryBanner,
+      selector: (row) => row.streamingNo,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Device No
+        </div>
+      ),
+      selector: (row) => row.deviceNo,
+    },
+    {
+      name: (
+        <div
+          style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
+        >
+          Price
+        </div>
+      ),
+      selector: (row) => row.price,
     },
 
     {
@@ -254,24 +231,25 @@ const AddAndMAnageMusicCategory = () => {
     },
   ];
 
-  const UpdateMusicCategory = () => {
-    console.log("ID", id);
+  const UpdateSubscription = () => {
     let data = {
-      catName: name,
-      image: image,
+      subsriptionDuration: subsriptionDuration,
+      streamingNo: streamingNo,
+      deviceNo: deviceNo,
+      price: price,
     };
-    if (name && image) {
-      HomeService.UpdateMusicCategory(id, data)
+    if (subsriptionDuration && streamingNo && deviceNo && price) {
+      HomeService.UpdatePodcastSubscription(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
             setHide(true);
 
-            setImage("");
-            setName("");
-            fetchAllMusicCategoryData();
-            let file = document.querySelector("#categoryBanner");
-            file.value = "";
+            setsubsriptionDuration("");
+            setstreamingNo("");
+            setdeviceNo("");
+            setprice("");
+            fetchAllSubscriptionData();
           } else {
             toast.error(res?.message);
           }
@@ -280,7 +258,7 @@ const AddAndMAnageMusicCategory = () => {
           console.log(err);
         });
     } else {
-      toast.error("All field are required");
+      toast.error("All fields are required");
     }
   };
   return (
@@ -310,7 +288,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Add Music Category
+                  Add PodCast Subscription
                 </div>
               ) : (
                 <div
@@ -322,71 +300,74 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Music Category
+                  Edit Podcast Subscription
                 </div>
               )}
 
               <div class="form-group">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">
-                    Category Name<span style={{ color: "red" }}>*</span> :
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    value={name}
-                    onChange={(e) => setName(e?.target?.value)}
-                    aria-describedby="emailHelp"
-                    placeholder="Enter category name"
-                  />
-                </div>
-                <label for="exampleInputEmail1">
-                  Image<span style={{ color: "red" }}>*</span> :
-                </label>
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Subsription Duration
+                      <span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      value={subsriptionDuration}
+                      onChange={(e) => setsubsriptionDuration(e.target.value)}
+                      placeholder="Enter subsription duration..."
+                    />
+                  </div>
 
-                <input
-                  class="form-control"
-                  onChange={(e) => HandleImage(e)}
-                  type="file"
-                  id="categoryBanner"
-                  accept="image/*"
-                />
-                {imageLoader ? (
-                  <>
-                    <ImageLoader />{" "}
-                  </>
-                ) : null}
-                {image && (
-                  <>
-                    <div>
-                      <img
-                        style={{
-                          height: "10%",
-                          width: "10%",
-                          marginTop: "12px",
-                          borderRadius: "5px",
-                        }}
-                        src={image}
-                      />
-                      <button
-                        onClick={() => HandleCrossClick()}
-                        style={{ color: "red" }}
-                        type="button"
-                        class="btn-close"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                  </>
-                )}
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Streaming Number<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Enter streaming number..."
+                      value={streamingNo}
+                      onChange={(e) => setstreamingNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div class="row" style={{ marginBottom: "1rem" }}>
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Device Number<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      value={deviceNo}
+                      onChange={(e) => setdeviceNo(e.target.value)}
+                      placeholder="Enter device number..."
+                    />
+                  </div>
+
+                  <div class="col">
+                    <label for="inputEmail4">
+                      Price<span style={{ color: "red" }}>*</span> :
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Enter price..."
+                      value={price}
+                      onChange={(e) => setprice(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddMusicCategory}>
+                <button class="btn btn-primary" onClick={AddSubscription}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
+                <button class="btn btn-primary" onClick={UpdateSubscription}>
                   Update
                 </button>
               )}
@@ -400,9 +381,13 @@ const AddAndMAnageMusicCategory = () => {
                 }}
                 className="card-title"
               >
-                Manage Music Category
+                Manage PodCast subscription
               </div>
-              <DataTable columns={columns} data={allState} pagination />
+              <DataTable
+                columns={columns}
+                data={allPodcastSubscriptionData}
+                pagination
+              />
             </div>
           </div>
         </div>
@@ -411,4 +396,4 @@ const AddAndMAnageMusicCategory = () => {
   );
 };
 
-export default AddAndMAnageMusicCategory;
+export default AddAndMaangePodcastSubscription;

@@ -8,19 +8,18 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndMAnageMusicCategory = () => {
+const AddAndManagePodCastCategory = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [allState, setAllState] = useState([]);
-
+  const [fetchAllPodCastData, setAllPodCastData] = useState([]);
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllMusicCategoryData();
+    fetchAllPodCastCategoryData();
   }, []);
 
   const HandleCrossClick = () => {
@@ -49,12 +48,12 @@ const AddAndMAnageMusicCategory = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteMusicCategory(id)
+        HomeService.DeletePodCastCategory(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllMusicCategoryData();
+              fetchAllPodCastCategoryData();
             } else {
               toast.error(res?.message);
             }
@@ -83,9 +82,9 @@ const AddAndMAnageMusicCategory = () => {
     setImageLoader(false);
   };
 
-  const fetchAllMusicCategoryData = () => {
+  const fetchAllPodCastCategoryData = () => {
     setLoading(true);
-    HomeService.ViewAllMusicCategory()
+    HomeService.ViewAllPodCastCategory()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
@@ -167,7 +166,7 @@ const AddAndMAnageMusicCategory = () => {
               ),
             };
           });
-          setAllState(arr);
+          setAllPodCastData(arr);
         }
         console.log("RESPONSE", res);
       })
@@ -177,18 +176,18 @@ const AddAndMAnageMusicCategory = () => {
       });
   };
 
-  const AddMusicCategory = () => {
+  const AddPodCastCategory = () => {
     let data = {
       catName: name,
       image: image,
     };
 
     if (name && image) {
-      HomeService.AddMusicCategory(data)
+      HomeService.AddPodCastCategory(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllMusicCategoryData();
+            fetchAllPodCastCategoryData();
             setImage("");
             setName("");
             let file = document.querySelector("#categoryBanner");
@@ -254,14 +253,14 @@ const AddAndMAnageMusicCategory = () => {
     },
   ];
 
-  const UpdateMusicCategory = () => {
+  const UpdatePodCastCategory = () => {
     console.log("ID", id);
     let data = {
       catName: name,
       image: image,
     };
     if (name && image) {
-      HomeService.UpdateMusicCategory(id, data)
+      HomeService.UpdatePodCastCategory(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
@@ -269,7 +268,7 @@ const AddAndMAnageMusicCategory = () => {
 
             setImage("");
             setName("");
-            fetchAllMusicCategoryData();
+            fetchAllPodCastCategoryData();
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -310,7 +309,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Add Music Category
+                  Add PodCast Category
                 </div>
               ) : (
                 <div
@@ -322,7 +321,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Music Category
+                  Edit PodCast Category
                 </div>
               )}
 
@@ -382,11 +381,11 @@ const AddAndMAnageMusicCategory = () => {
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddMusicCategory}>
+                <button class="btn btn-primary" onClick={AddPodCastCategory}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
+                <button class="btn btn-primary" onClick={UpdatePodCastCategory}>
                   Update
                 </button>
               )}
@@ -400,9 +399,13 @@ const AddAndMAnageMusicCategory = () => {
                 }}
                 className="card-title"
               >
-                Manage Music Category
+                Manage PodCast Category
               </div>
-              <DataTable columns={columns} data={allState} pagination />
+              <DataTable
+                columns={columns}
+                data={fetchAllPodCastData}
+                pagination
+              />
             </div>
           </div>
         </div>
@@ -411,4 +414,4 @@ const AddAndMAnageMusicCategory = () => {
   );
 };
 
-export default AddAndMAnageMusicCategory;
+export default AddAndManagePodCastCategory;

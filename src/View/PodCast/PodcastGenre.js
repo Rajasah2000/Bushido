@@ -8,19 +8,19 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndMAnageMusicCategory = () => {
+const PodcastGenre = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [allState, setAllState] = useState([]);
+  const [allPodcastgenreData, setallPodcastGenreData] = useState([]);
 
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllMusicCategoryData();
+    fetchAllPodcastGenreData();
   }, []);
 
   const HandleCrossClick = () => {
@@ -33,7 +33,7 @@ const AddAndMAnageMusicCategory = () => {
     window.scroll(0, 0);
     console.log("item", item);
     setImage(item?.image);
-    setName(item?.catName);
+    setName(item?.genreName);
     setId(item?._id);
     setHide(false);
   };
@@ -49,12 +49,12 @@ const AddAndMAnageMusicCategory = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteMusicCategory(id)
+        HomeService.DeletePodcastGenre(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllMusicCategoryData();
+              fetchAllPodcastGenreData();
             } else {
               toast.error(res?.message);
             }
@@ -83,9 +83,9 @@ const AddAndMAnageMusicCategory = () => {
     setImageLoader(false);
   };
 
-  const fetchAllMusicCategoryData = () => {
+  const fetchAllPodcastGenreData = () => {
     setLoading(true);
-    HomeService.ViewAllMusicCategory()
+    HomeService.ViewAllPodCastGenre()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
@@ -94,7 +94,7 @@ const AddAndMAnageMusicCategory = () => {
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              catName: item?.catName,
+              genrename: item?.genreName,
               CategoryBanner: (
                 <>
                   {item?.image ? (
@@ -167,7 +167,7 @@ const AddAndMAnageMusicCategory = () => {
               ),
             };
           });
-          setAllState(arr);
+          setallPodcastGenreData(arr);
         }
         console.log("RESPONSE", res);
       })
@@ -177,18 +177,18 @@ const AddAndMAnageMusicCategory = () => {
       });
   };
 
-  const AddMusicCategory = () => {
+  const AddPodCastGenre = () => {
     let data = {
-      catName: name,
+      genreName: name,
       image: image,
     };
 
     if (name && image) {
-      HomeService.AddMusicCategory(data)
+      HomeService.AddPodCastGenre(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllMusicCategoryData();
+            fetchAllPodcastGenreData();
             setImage("");
             setName("");
             let file = document.querySelector("#categoryBanner");
@@ -221,10 +221,10 @@ const AddAndMAnageMusicCategory = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Category Name
+          Genre Name
         </div>
       ),
-      selector: (row) => row.catName,
+      selector: (row) => row.genrename,
     },
     {
       name: (
@@ -254,14 +254,14 @@ const AddAndMAnageMusicCategory = () => {
     },
   ];
 
-  const UpdateMusicCategory = () => {
+  const UpdatePodcastGenre = () => {
     console.log("ID", id);
     let data = {
-      catName: name,
+      genreName: name,
       image: image,
     };
     if (name && image) {
-      HomeService.UpdateMusicCategory(id, data)
+      HomeService.UpdatePodcastGenre(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
@@ -269,7 +269,7 @@ const AddAndMAnageMusicCategory = () => {
 
             setImage("");
             setName("");
-            fetchAllMusicCategoryData();
+            fetchAllPodcastGenreData();
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -310,7 +310,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Add Music Category
+                  Add Podcast Genre
                 </div>
               ) : (
                 <div
@@ -322,14 +322,14 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Music Category
+                  Edit Podcast Genre
                 </div>
               )}
 
               <div class="form-group">
                 <div class="form-group">
                   <label for="exampleInputEmail1">
-                    Category Name<span style={{ color: "red" }}>*</span> :
+                    Podcast Genre Name<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
                     type="text"
@@ -338,7 +338,7 @@ const AddAndMAnageMusicCategory = () => {
                     value={name}
                     onChange={(e) => setName(e?.target?.value)}
                     aria-describedby="emailHelp"
-                    placeholder="Enter category name"
+                    placeholder="Enter podcast name"
                   />
                 </div>
                 <label for="exampleInputEmail1">
@@ -382,11 +382,11 @@ const AddAndMAnageMusicCategory = () => {
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddMusicCategory}>
+                <button class="btn btn-primary" onClick={AddPodCastGenre}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
+                <button class="btn btn-primary" onClick={UpdatePodcastGenre}>
                   Update
                 </button>
               )}
@@ -400,9 +400,13 @@ const AddAndMAnageMusicCategory = () => {
                 }}
                 className="card-title"
               >
-                Manage Music Category
+                Manage Podcast Genre
               </div>
-              <DataTable columns={columns} data={allState} pagination />
+              <DataTable
+                columns={columns}
+                data={allPodcastgenreData}
+                pagination
+              />
             </div>
           </div>
         </div>
@@ -411,4 +415,4 @@ const AddAndMAnageMusicCategory = () => {
   );
 };
 
-export default AddAndMAnageMusicCategory;
+export default PodcastGenre;

@@ -501,6 +501,410 @@ export default function Sidebar() {
                   </div>
                 </div>
               </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingTWO"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse11"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Music Genre
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse11"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingTwo"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-music-genre"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Music Genre
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingThree"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse12"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        PodCast Category
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse12"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingThree"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-manage-podcast-category"
+                            className="metismenu-link"
+                          >
+                            Add/Manage PodCast Category
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingFour"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse13"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Points
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse13"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingFour"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-view-points"
+                            className="metismenu-link"
+                          >
+                            Add/View Points
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingFive"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse14"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Mood
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse14"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingFive"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-mood"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Mood
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingSix"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse15"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Podcast Genre
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse15"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingSix"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-podcast-genre"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Podcast Genre
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="panel-body">
+                <div className="panel panel-default metismenu vertical-nav-menu">
+                  <div
+                    className="panel-heading metismenu-container"
+                    role="tab"
+                    id="headingSeven"
+                  >
+                    <div className="panel-title metismenu-item">
+                      <a
+                        className="collapsed metismenu-link"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordionMenu"
+                        href="#collapse16"
+                        aria-expanded="false"
+                        aria-controls="collapseNine"
+                        style={{ fontWeight: "700", fontSize: "medium" }}
+                      >
+                        {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                        Subscription
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    id="collapse16"
+                    className="panel-collapse collapse"
+                    role="tabpanel"
+                    aria-labelledby="headingSeven"
+                  >
+                    <div className="panel-body">
+                      <ul className="metismenu-container">
+                        <li className="metismenu-item">
+                          <Link
+                            to="/add-and-manage-podcast-subscription"
+                            className="metismenu-link"
+                          >
+                            Add/Manage Subscription
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingeight"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse21"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                  {/* <TbCategory/> */}
+                  OTT Partner
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse21"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingeight"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/add-and-manage-ott-partner"
+                      className="metismenu-link"
+                    >
+                      AddAndManage OTT Partner
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingnine"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse23"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                  {/* <TbCategory/> */}
+                  OTT Content Language
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse23"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingnine"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/add-and-manage-ott-content-language"
+                      className="metismenu-link"
+                    >
+                      Add/Manage OTTContentLanguage
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="panel panel-default metismenu vertical-nav-menu">
+            <div
+              className="panel-heading metismenu-container"
+              role="tab"
+              id="headingTen"
+            >
+              <div className="panel-title metismenu-item">
+                <a
+                  className="collapsed metismenu-link"
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordionMenu"
+                  href="#collapse43"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                  style={{ fontWeight: "700", fontSize: "medium" }}
+                >
+                  {/* <i class="metismenu-icon fa-brands fa-searchengin"></i> */}
+                  {/* <TbCategory/> */}
+                  OTT Partner Approve
+                </a>
+              </div>
+            </div>
+            <div
+              id="collapse43"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="headingten"
+            >
+              <div className="panel-body">
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/view-apprroved-partnership-list"
+                      className="metismenu-link"
+                    >
+                      Approved PartnerShip
+                    </Link>
+                  </li>
+                </ul>
+                <ul className="metismenu-container">
+                  <li className="metismenu-item">
+                    <Link
+                      to="/view-disapproved-partnership-list"
+                      className="metismenu-link"
+                    >
+                      DisApproved PartnerShip
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

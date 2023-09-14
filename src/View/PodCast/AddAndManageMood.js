@@ -8,19 +8,19 @@ import ImageLoader from "../../Loader/ImageLoader";
 import HttpClientXml from "../../Utils/HttpClientXml";
 import PageLoader from "../../Loader/PageLoader";
 
-const AddAndMAnageMusicCategory = () => {
+const AddAndManageMood = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imageLoader, setImageLoader] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [allState, setAllState] = useState([]);
+  const [allMood, setAllMood] = useState([]);
 
   const [hide, setHide] = useState(true);
   const [id, setId] = useState("");
 
   useEffect(() => {
-    fetchAllMusicCategoryData();
+    fetchAllMood();
   }, []);
 
   const HandleCrossClick = () => {
@@ -33,7 +33,7 @@ const AddAndMAnageMusicCategory = () => {
     window.scroll(0, 0);
     console.log("item", item);
     setImage(item?.image);
-    setName(item?.catName);
+    setName(item?.mood);
     setId(item?._id);
     setHide(false);
   };
@@ -49,12 +49,12 @@ const AddAndMAnageMusicCategory = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        HomeService.DeleteMusicCategory(id)
+        HomeService.DeleteMood(id)
           .then((res) => {
             if (res && res.status) {
               toast.success("Deleted Successfully");
 
-              fetchAllMusicCategoryData();
+              fetchAllMood();
             } else {
               toast.error(res?.message);
             }
@@ -83,9 +83,9 @@ const AddAndMAnageMusicCategory = () => {
     setImageLoader(false);
   };
 
-  const fetchAllMusicCategoryData = () => {
+  const fetchAllMood = () => {
     setLoading(true);
-    HomeService.ViewAllMusicCategory()
+    HomeService.ViewAllMood()
       .then((res) => {
         console.log("ResAllBlog", res.data);
         if (res && res?.status) {
@@ -94,7 +94,7 @@ const AddAndMAnageMusicCategory = () => {
           let arr = res?.data?.map((item, index) => {
             return {
               sl: index + 1,
-              catName: item?.catName,
+              mood: item?.mood,
               CategoryBanner: (
                 <>
                   {item?.image ? (
@@ -167,7 +167,7 @@ const AddAndMAnageMusicCategory = () => {
               ),
             };
           });
-          setAllState(arr);
+          setAllMood(arr);
         }
         console.log("RESPONSE", res);
       })
@@ -177,18 +177,18 @@ const AddAndMAnageMusicCategory = () => {
       });
   };
 
-  const AddMusicCategory = () => {
+  const AddMood = () => {
     let data = {
-      catName: name,
+      mood: name,
       image: image,
     };
 
     if (name && image) {
-      HomeService.AddMusicCategory(data)
+      HomeService.AddMood(data)
         .then((res) => {
           if (res && res.status) {
             toast.success(res.message);
-            fetchAllMusicCategoryData();
+            fetchAllMood();
             setImage("");
             setName("");
             let file = document.querySelector("#categoryBanner");
@@ -221,10 +221,10 @@ const AddAndMAnageMusicCategory = () => {
         <div
           style={{ fontSize: "14px", color: "#495057", fontWeight: "bolder" }}
         >
-          Category Name
+          Mood Name
         </div>
       ),
-      selector: (row) => row.catName,
+      selector: (row) => row.mood,
     },
     {
       name: (
@@ -254,14 +254,14 @@ const AddAndMAnageMusicCategory = () => {
     },
   ];
 
-  const UpdateMusicCategory = () => {
+  const UpdateMood = () => {
     console.log("ID", id);
     let data = {
-      catName: name,
+      mood: name,
       image: image,
     };
     if (name && image) {
-      HomeService.UpdateMusicCategory(id, data)
+      HomeService.UpdateMood(id, data)
         .then((res) => {
           if (res && res.status) {
             toast.success("Updated Successfully");
@@ -269,7 +269,7 @@ const AddAndMAnageMusicCategory = () => {
 
             setImage("");
             setName("");
-            fetchAllMusicCategoryData();
+            fetchAllMood();
             let file = document.querySelector("#categoryBanner");
             file.value = "";
           } else {
@@ -310,7 +310,7 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Add Music Category
+                  Add Mood
                 </div>
               ) : (
                 <div
@@ -322,14 +322,14 @@ const AddAndMAnageMusicCategory = () => {
                   }}
                   className="card-title"
                 >
-                  Edit Music Category
+                  Edit Mood
                 </div>
               )}
 
               <div class="form-group">
                 <div class="form-group">
                   <label for="exampleInputEmail1">
-                    Category Name<span style={{ color: "red" }}>*</span> :
+                    Mood Name<span style={{ color: "red" }}>*</span> :
                   </label>
                   <input
                     type="text"
@@ -338,7 +338,7 @@ const AddAndMAnageMusicCategory = () => {
                     value={name}
                     onChange={(e) => setName(e?.target?.value)}
                     aria-describedby="emailHelp"
-                    placeholder="Enter category name"
+                    placeholder="Enter mood name"
                   />
                 </div>
                 <label for="exampleInputEmail1">
@@ -382,11 +382,11 @@ const AddAndMAnageMusicCategory = () => {
               </div>
 
               {hide ? (
-                <button class="btn btn-primary" onClick={AddMusicCategory}>
+                <button class="btn btn-primary" onClick={AddMood}>
                   Submit
                 </button>
               ) : (
-                <button class="btn btn-primary" onClick={UpdateMusicCategory}>
+                <button class="btn btn-primary" onClick={UpdateMood}>
                   Update
                 </button>
               )}
@@ -400,9 +400,9 @@ const AddAndMAnageMusicCategory = () => {
                 }}
                 className="card-title"
               >
-                Manage Music Category
+                Manage Mood
               </div>
-              <DataTable columns={columns} data={allState} pagination />
+              <DataTable columns={columns} data={allMood} pagination />
             </div>
           </div>
         </div>
@@ -411,4 +411,4 @@ const AddAndMAnageMusicCategory = () => {
   );
 };
 
-export default AddAndMAnageMusicCategory;
+export default AddAndManageMood;
